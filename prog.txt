@@ -1,0 +1,316 @@
+lettre [a-zA-Z]
+chiffre [0-9]
+id [A-Z]({lettre}|{chiffre})*
+entier ((0|[1-9]{chiffre}*)|"("[+-](0|[1-9]{chiffre}*)")")
+reel ((0|[1-9]{chiffre}*)"."{chiffre}+|"("[+-](0|[1-9]{chiffre}*)"."{chiffre}+")")
+comment "#"(.)*
+espace (" ")+
+saut ("\n")+
+
+
+
+
+%%
+
+[\t]*		{
+			depth = indent_depth(yytext);
+			if(depth < top())
+			{
+				while (depth < top()) pop();
+				yylval.depth = depth;
+				return DEDENT;
+			}
+			if(depth > top())
+			{
+				push(depth);
+				yylval.depth = depth;
+				return INDENT;
+			}
+			
+		}
+
+
+        
+
+True {return TRUE;}
+False {return FALSE;}
+if {return IF;}
+elif {return ELIF;}
+else {return ELSE;}
+for {return FOR;}
+in {return IN;}
+range {return RANGE;}
+int {return INT;}
+float {return FLOAT;}
+None {return NONE;}
+and {return AND;}
+while {return WHILE;}
+break {return BREAK;}
+continue {return CONTINUE;}
+or {return OR;}
+print {return PRINT;}
+is {return IS;}
+return {return RETURN;}
+input {return INPUT;}
+not  {return NOT;}
+import {return IMPORT;}
+from {return FROM ;}
+as    {return AS;}
+def   {return DEF;}
+
+"+" {return ADD;}
+"-" {return SUB;}
+"*" {return MULT;}
+"/" {return DIV;}
+"==" {return EQ;}
+"<=" {return INFEQ;}
+">=" {return SUPEQ;}
+">" {return SUP;}
+"<" {return INF;}
+"=" {return AFF;}
+"!=" {return NOTEQ;}
+
+"**" {return PUI;}
+"//" {return DIVENT;}
+"%" {return DIVRES;}
+"+=" {return ADDAFF;}
+
+
+"-=" {return SUBAFF;}
+"/=" {return DIVAFF;}
+"%=" {return DIVRESAFF;}
+"//=" {return DIVENTAFF;}
+"*=" {return MULTAFF;}
+"**=" {return PUIAFF;}
+
+":" {return COL;}
+";" {return SCOL;}
+"{" {return AO;}
+"}" {return AF;}
+"[" {return BO;}
+"]" {return BC;}
+"(" {return PO;}
+")" {return PF;}
+"," {return COM;}
+"." {return DOT;}
+
+
+
+\"([^\"\n])*\" {yylval.text = strdup(yytext); return STRING;}
+\'([^\'\n])*\' {yylval.text = strdup(yytext); return STRING;}
+
+
+
+{id} { yylval.text = strdup(yytext);return ID;}
+{entier} { yylval.text = strdup(yytext); return ENTIER;}
+{reel} {yylval.text = strdup(yytext); return REEL;}
+{comment} {}
+{espace}  {}
+{saut} {return SAUT;}
+<<EOF>> {yyterminate();return FIN;}
+
+%%
+
+
+
+
+
+
+//-----------------------
+
+
+
+
+
+
+
+
+%start startparse
+
+%left AND OR IN  
+%left SUPEQ INFEQ EQ AFF NOTEQ SUP INF
+%left ADD SUB
+%left MULT DIV
+
+
+
+%union {char *text;int depth;};
+%locations
+   	  
+%token FIN SAUT REEL ENTIER ID STRING DOT COM PF PO BC BO AF AO SCOL COL PUIAFF MULTAFF DIVENTAFF DIVRESAFF DIVAFF SUBAFF ADDAFF DIVRES DIVENT PUI NOTEQ AFF SUP INF TRUE FALSE IF ELIF ELSE FOR IN RANGE INT FLOAT NONE AND WHILE BREAK CONTINUE OR PRINT IS RETURN INPUT NOT IMPORT FROM AS DEF ADD SUB MULT DIV EQ INFEQ SUPEQ DEDENT INDENT
+%%
+// Grammar
+
+startparse : SAUT startparse | finalstatements SAUT startparse | finalstatements SAUT
+	   ;
+	   
+finalstatements : basic_stmt
+                | if_stmt
+                | while_stmt
+                | func_def
+		        | for_stmt
+                | func_call
+                | error SAUT
+		;	   
+	   
+basic_stmt : BREAK
+	   | CONTINUE
+           | import_stmt
+           | assign_stmt
+           | arith_exp
+           | bool_exp
+           | print_stmt
+           | return_stmt
+	   ;
+
+
+import_stmt : IMPORT nomlbr
+	    | FROM ID IMPORT nomlbr
+	    ;
+nomlbr      :ID
+	    |ID COM nomlbr	
+            |MULT
+	    |ID AS ID COM nomlbr
+	    ;
+return_stmt : RETURN arith_exp
+	    | RETURN bool_exp
+	    | RETURN
+	    ;
+assign_stmt : ID aff arith_exp
+            | ID aff bool_exp  
+            | ID aff func_call
+	    ;
+aff : AFF
+    | DIVAFF
+    | MULTAFF
+    | PUIAFF
+    | SUBAFF
+    | ADDAFF
+    | DIVRESAFF
+    | DIVENTAFF
+    ;
+print_stmt : PRINT PO term PF
+	   ;
+
+if_stmt : IF bool_exp COL block
+        | IF bool_exp COL block elif_stmts
+	;
+elif_stmts : else_stmt
+           | ELIF bool_exp COL block elif_stmts
+	   ;
+else_stmt : ELSE COL block
+	  ;
+while_stmt : WHILE bool_exp COL block
+	   ;
+for_stmt  : FOR star_target IN inid COL  block
+	  ;
+star_target : ID
+	    | ID COM star_target
+	    ;
+block : basic_stmt
+      | SAUT INDENT finalstatements DEDENT
+      ;
+
+
+func_def : DEF ID PO args PF COL block
+	 ;
+
+func_call : ID PO call_args PF
+	  ;
+
+args :
+     | ID args_list
+     ;	
+args_list :
+	  | COM ID args_list
+	  ;
+call_list :
+	  |COM term call_list
+	  ;
+
+call_args :
+	| ID call_list
+	| constant call_list
+	;
+
+arith_exp : term
+          | arith_exp  ADD  arith_exp
+          | arith_exp  SUB  arith_exp
+          | arith_exp  MULT  arith_exp
+          | arith_exp  DIV  arith_exp
+	      | arith_exp  DIVENT  arith_exp
+	      | arith_exp  PUI  arith_exp
+	      | arith_exp  DIVRES  arith_exp
+          | SUB arith_exp
+          | PO arith_exp PF
+	  ;
+bool_exp : bool_term OR bool_term
+         | arith_exp INF arith_exp
+         | bool_term AND bool_term
+         | arith_exp SUP arith_exp
+         | arith_exp INFEQ arith_exp
+         | arith_exp SUPEQ arith_exp
+         | arith_exp IN inid
+         | bool_term
+	 ;	
+inid : ID
+     | STRING
+     | func_call
+     | list
+     | tuple
+     | dict
+     ;
+bool_term : bool_factor
+          | arith_exp EQ arith_exp
+	    | arith_exp NOTEQ arith_exp
+          | TRUE
+          | FALSE
+          ;
+
+bool_factor : PO bool_exp PF
+	        | bool_exp
+	        ;
+	
+atom : term
+     |bool_term
+     ;
+term : ID
+     | constant
+     | linstindex
+     | func_call
+     | list
+     | tuple
+     | dict
+	 | set
+     | NONE
+     ;
+linstindex : ID BO constant BC
+	   ;
+constant : number
+         | STRING
+	 ;	
+number  : ENTIER
+        | REEL
+	;
+
+list : BO nameExpression BC
+     ;
+tuple: PO nameExpression PF
+     ;
+set  : AO nameExpression AF
+     ;
+dict : AO kvpairs AF
+     ;
+kvpairs :kvpair
+        |kvpair COM kvpairs
+	;
+kvpair: key COL atom
+      ;
+key : constant
+    |	tuple
+    ;
+nameExpression :
+	       |atom
+       	       |atom COM nameExpression
+	       |atom COM
+	       ;
