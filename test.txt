@@ -3,31 +3,25 @@ def sum(a,b):{
     return c
 }
 
-#commentaire
-
 a = sum(2,5)
-
-for i from 5 to 12 with 1 :{
+b+=3
+for j from a to a with 1 :{
     while i%2==0 :{
     if i<3 : {
-
-    a += 2 
-
+    a = 2 
     i = 2
-    
     }elif i>4 : {
-         a = i
-         print(a)
+         b=a
+		 print("test",a)
     }else : {
     for i from 5 to 12 with 1 :{
-    a = i
-    e=3
+    a += i
+    e = 3
     }
     }
     }
 
 }
-
 
 a += 2
 
@@ -35,5 +29,17 @@ if a>2 : a += 2
 
 
 
+def moyen(a,b,c):{ #function for calcu moyen 3 varr   
+     moy= a+b+c
+	 moy/=3
+    return moy
+}
+def numberPrime(n):{ #function test if number is prime
 
-
+	for i from 3 to n with 2:{
+		if n%i == 0:{
+		return 0
+		}
+	}
+	return 1
+}

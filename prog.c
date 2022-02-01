@@ -550,9 +550,10 @@ char *yytext;
 #include <stdio.h>
 #include <stdlib.h>
 #include "prog.tab.h"
+#include <string.h>
 
-#line 554 "prog.c"
 #line 555 "prog.c"
+#line 556 "prog.c"
 
 #define INITIAL 0
 
@@ -769,10 +770,10 @@ YY_DECL
 		}
 
 	{
-#line 13 "prog.l"
+#line 14 "prog.l"
 
 
-#line 775 "prog.c"
+#line 776 "prog.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -841,279 +842,275 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 15 "prog.l"
+#line 16 "prog.l"
 {printf("This is a comment\n");yylineno++;}
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 17 "prog.l"
+#line 18 "prog.l"
 {return T_newline;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 19 "prog.l"
+#line 20 "prog.l"
 {}
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 21 "prog.l"
+#line 22 "prog.l"
 {yyterminate();return T_eof;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 23 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_semi_colon;}
+#line 24 "prog.l"
+{return T_semi_colon;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 24 "prog.l"
-{fprintf(yyout, "%s", yytext);printf("Matches Equal\n"); return T_eq;}
+#line 25 "prog.l"
+{return T_eq;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 25 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_comma;}
+#line 26 "prog.l"
+{return T_comma;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 26 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_plus_eq;}
+#line 27 "prog.l"
+{return T_plus_eq;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 27 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_minus_eq;}
+#line 28 "prog.l"
+{return T_minus_eq;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 28 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_star_eq;}
+#line 29 "prog.l"
+{return T_star_eq;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 29 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_div_eq;}
+#line 30 "prog.l"
+{return T_div_eq;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 30 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_mod_eq;}
+#line 31 "prog.l"
+{return T_mod_eq;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 31 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_break;}
+#line 32 "prog.l"
+{return T_break;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 32 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_from;}
+#line 33 "prog.l"
+{return T_from;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 33 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_with;}
+#line 34 "prog.l"
+{return T_with;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 34 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_to;}
+#line 35 "prog.l"
+{return T_to;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 35 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_continue;}
+#line 36 "prog.l"
+{return T_continue;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 36 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_return;}
+#line 37 "prog.l"
+{return T_return;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 37 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_star;}
+#line 38 "prog.l"
+{return T_star;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 38 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_Lparan;}
+#line 39 "prog.l"
+{return T_Lparan;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 39 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_Rparan;}
+#line 40 "prog.l"
+{return T_Rparan;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 40 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_Lacco;}
+#line 41 "prog.l"
+{return T_Lacco;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 41 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_Racco;}
+#line 42 "prog.l"
+{return T_Racco;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 42 "prog.l"
-{fprintf(yyout, "%s", yytext);printf("Matched If\n"); return T_if;}
+#line 43 "prog.l"
+{return T_if;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 43 "prog.l"
-{fprintf(yyout, "%s", yytext);printf("Matched WHILE\n"); return T_while;}
+#line 44 "prog.l"
+{return T_while;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 44 "prog.l"
-{fprintf(yyout, "%s", yytext);printf("Matched Colon\n"); return T_colon;}
+#line 45 "prog.l"
+{return T_colon;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 45 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_elif;}
+#line 46 "prog.l"
+{return T_elif;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 46 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_else;}
+#line 47 "prog.l"
+{return T_else;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 47 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_for;}
+#line 48 "prog.l"
+{return T_for;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 48 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_or;}
+#line 49 "prog.l"
+{return T_or;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 49 "prog.l"
-{fprintf(yyout, "%s", yytext);printf("Matched and\n"); return T_and;}
+#line 50 "prog.l"
+{ return T_and;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 50 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_lt;}
+#line 51 "prog.l"
+{return T_lt;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 51 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_gt;}
+#line 52 "prog.l"
+{return T_gt;}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 52 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_deq;}
+#line 53 "prog.l"
+{return T_deq;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 53 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_ge;}
+#line 54 "prog.l"
+{return T_ge;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 54 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_le;}
+#line 55 "prog.l"
+{return T_le;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 55 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_noteq;}
+#line 56 "prog.l"
+{return T_noteq;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 56 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_plus;}
+#line 57 "prog.l"
+{return T_plus;}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 57 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_minus;}
+#line 58 "prog.l"
+{return T_minus;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 58 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_divide;}
+#line 59 "prog.l"
+{return T_divide;}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 59 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_mod;}
+#line 60 "prog.l"
+{return T_mod;}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 60 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_double_divide;}
+#line 61 "prog.l"
+{return T_double_divide;}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 61 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_double_star;}
+#line 62 "prog.l"
+{return T_double_star;}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 62 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_squarebleft;}
+#line 63 "prog.l"
+{return T_squarebleft;}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 63 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_squarebright;}
+#line 64 "prog.l"
+{return T_squarebright;}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 64 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_none;}
+#line 65 "prog.l"
+{return T_none;}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 65 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_true;}
+#line 66 "prog.l"
+{return T_true;}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 66 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_false;}
+#line 67 "prog.l"
+{return T_false;}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 67 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_def;}
+#line 68 "prog.l"
+{return T_def;}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 68 "prog.l"
-{fprintf(yyout, " ");/*Extra Whitespace*/}
+#line 69 "prog.l"
+{}
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 70 "prog.l"
-{
-                                        fprintf(yyout, "%s", yytext);
-                                       printf("Matched : %s\n", yytext);
-                                       return T_name;
-                                    }
+#line 71 "prog.l"
+{strcpy(yylval.VarName,yytext);  return T_name;}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 75 "prog.l"
-{fprintf(yyout, "%s", yytext);printf("Found a number\n"); return T_number;}
+#line 72 "prog.l"
+{yylval.Num = atoi(yytext) ; return T_number;}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 76 "prog.l"
-{fprintf(yyout, "%s", yytext);return T_string;}
+#line 73 "prog.l"
+{yylval.String_Value = yytext ;return T_string;}
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 77 "prog.l"
+#line 74 "prog.l"
 ECHO;
 	YY_BREAK
-#line 1116 "prog.c"
+#line 1113 "prog.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2128,10 +2125,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 77 "prog.l"
-
-
-
+#line 74 "prog.l"
 
 
 
